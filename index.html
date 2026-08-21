@@ -54,7 +54,7 @@
   .start-page .mascot { font-size: 64px; margin-bottom: 16px; animation: bounce 2s infinite; }
   @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
   .difficulty-label { font-size: 16px; font-weight: bold; color: #333; margin-bottom: 12px; }
-  .difficulty-cards { display: flex; gap: 10px; margin-bottom: 24px; }
+  .difficulty-cards { display: flex; gap: 10px; margin-bottom: 20px; }
   .diff-card {
     flex: 1; padding: 16px 8px; border-radius: 16px; cursor: pointer;
     border: 3px solid #eee; transition: all 0.25s; text-align: center;
@@ -72,6 +72,11 @@
   }
   .start-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 35px rgba(102,126,234,0.5); }
   .start-btn:active { transform: translateY(0); }
+  .view-lb-btn {
+    display:inline-block;margin-top:14px;padding:8px 20px;border:none;border-radius:20px;
+    background:#f0f0f0;color:#666;font-size:13px;cursor:pointer;transition:all 0.2s;
+  }
+  .view-lb-btn:hover{background:#e0e0e0}
 
   /* 答题页 */
   .quiz-page { display: none; }
@@ -145,15 +150,34 @@
   .rank-a{background:linear-gradient(135deg,#a29bfe,#6c5ce7)}
   .rank-b{background:linear-gradient(135deg,#55efc4,#00b894)}
   .rank-c{background:linear-gradient(135deg,#fdcb6e,#e17055)}
-  .comment { color: #666; font-size: 14px; line-height: 1.6; margin-bottom: 16px; padding: 0 8px; }
+  .comment { color: #666; font-size: 14px; line-height: 1.6; margin-bottom: 14px; padding: 0 8px; }
+
+  /* 保存成绩 */
+  .save-score {
+    background: #f8f8ff; border: 2px dashed #c0c0ff; border-radius: 14px;
+    padding: 14px; margin-bottom: 14px;
+  }
+  .save-score p { font-size: 13px; color: #667eea; margin-bottom: 8px; font-weight: bold; }
+  .save-score input {
+    width: 100%; padding: 10px 14px; border: 2px solid #e0e0ff; border-radius: 10px;
+    font-size: 14px; outline: none; transition: border-color 0.2s; font-family: inherit;
+  }
+  .save-score input:focus { border-color: #667eea; }
+  .save-score .save-btn {
+    margin-top: 8px; width: 100%; padding: 10px;
+    background: linear-gradient(135deg,#667eea,#764ba2); color: #fff;
+    border: none; border-radius: 10px; font-size: 14px; font-weight: bold; cursor: pointer;
+  }
+  .save-score .save-btn:hover { transform: translateY(-1px); }
+  .saved-tip { font-size: 13px; color: #20bf6b; margin-top: 6px; font-weight: bold; }
 
   /* 成就 */
-  .achievements { margin-bottom: 16px; }
+  .achievements { margin-bottom: 14px; }
   .ach-title { font-size: 13px; font-weight: bold; color: #999; margin-bottom: 8px; }
-  .ach-list { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .ach-list { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
   .ach-item {
-    padding: 6px 12px; border-radius: 12px; font-size: 12px; font-weight: bold;
-    background: #f0f0f0; color: #999; display: flex; align-items: center; gap: 4px;
+    padding: 5px 10px; border-radius: 10px; font-size: 12px; font-weight: bold;
+    background: #f0f0f0; color: #999; display: flex; align-items: center; gap: 3px;
   }
   .ach-item.unlocked { background: linear-gradient(135deg,#ffd700,#ff8c00); color: #fff; animation: achPop 0.5s; }
   @keyframes achPop{0%{transform:scale(0)}50%{transform:scale(1.15)}100%{transform:scale(1)}}
@@ -168,7 +192,7 @@
   .btn-secondary { background: #f0f0f0; color: #666; }
   .btn-secondary:hover { background: #e0e0e0; }
 
-  /* 海报弹窗 */
+  /* 弹窗通用 */
   .modal-overlay {
     display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
     background: rgba(0,0,0,0.6); z-index: 100; align-items: center; justify-content: center;
@@ -177,18 +201,46 @@
   .modal-overlay.show { display: flex; }
   @keyframes fadeIn{from{opacity:0}to{opacity:1}}
   .modal {
-    background: #fff; border-radius: 20px; padding: 20px; width: 100%; max-width: 360px;
-    text-align: center; animation: popIn 0.4s;
+    background: #fff; border-radius: 20px; padding: 20px; width: 100%; max-width: 380px;
+    max-height: 85vh; overflow-y: auto; text-align: center; animation: popIn 0.4s;
   }
-  .modal h3 { font-size: 18px; color: #333; margin-bottom: 12px; }
-  #posterCanvas { width: 100%; border-radius: 12px; margin-bottom: 12px; }
-  .modal-tip { font-size: 12px; color: #999; margin-bottom: 12px; }
+  .modal h3 { font-size: 20px; color: #333; margin-bottom: 6px; }
+  .modal .modal-sub { color: #999; font-size: 12px; margin-bottom: 16px; }
+
+  /* 排行榜 */
+  .leaderboard-list { list-style: none; text-align: left; }
+  .leaderboard-item {
+    display: flex; align-items: center; padding: 10px 12px; border-radius: 10px;
+    margin-bottom: 6px; background: #f8f8ff; transition: all 0.2s;
+  }
+  .leaderboard-item:hover { transform: translateX(3px); }
+  .leaderboard-item.top1 { background: linear-gradient(135deg,#fff9e6,#fff3cd); border:1px solid #ffd700; }
+  .leaderboard-item.top2 { background: linear-gradient(135deg,#f5f6fa,#e8e8e8); border:1px solid #c0c0c0; }
+  .leaderboard-item.top3 { background: linear-gradient(135deg,#fef0e6,#fde0cc); border:1px solid #cd7f32; }
+  .lb-rank {
+    width: 28px; height: 28px; border-radius: 50%; background: #e0e0ff; color: #667eea;
+    display: flex; align-items: center; justify-content: center; font-weight: bold;
+    font-size: 13px; margin-right: 10px; flex-shrink: 0;
+  }
+  .top1 .lb-rank { background: #ffd700; color: #fff; font-size: 16px; }
+  .top2 .lb-rank { background: #c0c0c0; color: #fff; font-size: 16px; }
+  .top3 .lb-rank { background: #cd7f32; color: #fff; font-size: 16px; }
+  .lb-name { flex: 1; font-size: 14px; font-weight: 500; color: #333; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .lb-score { font-size: 15px; font-weight: bold; color: #667eea; }
+  .lb-diff { font-size: 10px; color: #999; margin-left: 6px; }
+  .empty-board { text-align: center; padding: 30px 16px; color: #999; font-size: 14px; }
+  .empty-board .big { font-size: 42px; margin-bottom: 8px; }
   .modal button {
     width: 100%; padding: 12px; border: none; border-radius: 12px;
     background: linear-gradient(135deg,#667eea,#764ba2); color: #fff;
-    font-size: 15px; font-weight: bold; cursor: pointer; margin-bottom: 8px;
+    font-size: 15px; font-weight: bold; cursor: pointer; margin-top: 10px;
   }
-  .modal .close-btn { background: #f0f0f0; color: #666; }
+  .modal .close-btn { background: #f0f0f0; color: #666; margin-top: 6px; }
+  .modal .clear-btn { background: transparent; color: #bbb; font-size: 12px; text-decoration: underline; margin-top: 4px; box-shadow: none; }
+
+  /* 海报 */
+  #posterCanvas { width: 100%; border-radius: 12px; margin-bottom: 10px; }
+  .modal-tip { font-size: 12px; color: #999; margin-bottom: 8px; }
 </style>
 </head>
 <body>
@@ -216,6 +268,8 @@
       </div>
     </div>
     <button class="start-btn" onclick="startGame()">开始挑战 🚀</button>
+    <br>
+    <button class="view-lb-btn" onclick="showLeaderboard()">🏆 查看排行榜</button>
   </div>
 
   <!-- 答题页 -->
@@ -242,14 +296,36 @@
     </div>
     <div class="rank-tag" id="rankBadge"></div>
     <div class="comment" id="comment"></div>
+
+    <div class="save-score" id="saveScoreBox">
+      <p>🏆 输入昵称，登上排行榜！</p>
+      <input type="text" id="playerName" placeholder="请输入昵称（最多8个字）" maxlength="8">
+      <button class="save-btn" onclick="saveScore()">保存到排行榜</button>
+    </div>
+
     <div class="achievements" id="achSection">
       <div class="ach-title">🏅 获得成就</div>
       <div class="ach-list" id="achList"></div>
     </div>
+
     <div class="btn-group">
       <button class="btn-primary" onclick="restart()">🔄 再来一局</button>
-      <button class="btn-secondary" onclick="showPoster()">📸 生成海报</button>
+      <button class="btn-secondary" onclick="showLeaderboard()">🏆 排行榜</button>
     </div>
+    <div class="btn-group" style="margin-top:8px">
+      <button class="btn-secondary" onclick="showPoster()" style="flex:1">📸 生成海报</button>
+    </div>
+  </div>
+</div>
+
+<!-- 排行榜弹窗 -->
+<div class="modal-overlay" id="leaderboardModal">
+  <div class="modal">
+    <h3>🏆 排行榜</h3>
+    <div class="modal-sub">本地成绩 · 前10名</div>
+    <ul class="leaderboard-list" id="leaderboardList"></ul>
+    <button onclick="closeLeaderboard()">关闭</button>
+    <button class="clear-btn" onclick="clearLeaderboard()">清空排行榜</button>
   </div>
 </div>
 
@@ -265,7 +341,7 @@
 </div>
 
 <script>
-// ==================== 题库（20题，分难度） ====================
+// ==================== 题库 ====================
 const questionBank = {
   easy: [
     { q: "太阳从哪个方向升起？", opts: ["东方","西方","南方","北方"], a: 0 },
@@ -288,7 +364,7 @@ const questionBank = {
     { q: "圆周率π大约等于多少？", opts: ["2.14","3.14","4.14","5.14"], a: 1 },
   ],
   hard: [
-    { q: "量子力学中的'薛定谔的猫'是关于什么的？", opts: ["生物实验","叠加态思想实验","化学反","天文观测"], a: 1 },
+    { q: "量子力学中的'薛定谔的猫'是关于什么的？", opts: ["生物实验","叠加态思想实验","化学反应","天文观测"], a: 1 },
     { q: "《百年孤独》的作者是？", opts: ["马尔克斯","博尔赫斯","聂鲁达","略萨"], a: 0 },
     { q: "人类基因组大约有多少个基因？", opts: ["2千个","2万个","20万个","200万个"], a: 1 },
     { q: "宇宙大爆炸大约发生在多久以前？", opts: ["46亿年","100亿年","138亿年","200亿年"], a: 2 },
@@ -314,6 +390,7 @@ let correctCount = 0;
 let totalAnswered = 0;
 let startTime = 0;
 let achievements = [];
+let scoreSaved = false;
 
 // ==================== 音效 ====================
 let audioCtx = null;
@@ -350,7 +427,6 @@ function selectDiff(el){
 // ==================== 开始游戏 ====================
 function startGame(){
   sClick();
-  // 从对应难度题库随机抽10题
   const pool = [...questionBank[currentDiff]];
   questions = [];
   const count = Math.min(10, pool.length);
@@ -359,10 +435,12 @@ function startGame(){
     questions.push(pool.splice(idx,1)[0]);
   }
   currentIndex=0;score=0;lives=3;combo=0;maxCombo=0;correctCount=0;totalAnswered=0;
-  startTime=Date.now();achievements=[];
+  startTime=Date.now();achievements=[];scoreSaved=false;
   document.getElementById('startPage').style.display='none';
   document.getElementById('resultPage').style.display='none';
   document.getElementById('quizPage').style.display='block';
+  document.getElementById('saveScoreBox').style.display='block';
+  document.getElementById('playerName').value='';
   renderQuestion();
 }
 
@@ -405,7 +483,6 @@ function selectAnswer(index){
   if(index===q.a){
     divs[index].classList.add('correct');
     correctCount++;combo++;maxCombo=Math.max(maxCombo,combo);
-    // 基础分 + 连击加成
     let base = currentDiff==='hard'?15:currentDiff==='medium'?12:10;
     let bonus = combo>=10?20:combo>=5?10:combo>=3?5:0;
     score += base+bonus;
@@ -443,7 +520,6 @@ function gameOver(type){
   const elapsed=Math.round((Date.now()-startTime)/1000);
   const avgTime=totalAnswered>0?Math.round(elapsed/totalAnswered):0;
 
-  // 成就判定
   achievements=[];
   if(correctCount===questions.length)achievements.push({icon:'💯',name:'满分达人'});
   if(maxCombo>=10)achievements.push({icon:'⚡',name:'十连答对'});
@@ -452,7 +528,6 @@ function gameOver(type){
   if(correctCount>=questions.length*0.8&&lives===3)achievements.push({icon:'👑',name:'无伤通关'});
   if(currentDiff==='hard'&&score>=80)achievements.push({icon:'🏆',name:'困难大师'});
 
-  // 评级
   const emoji=document.getElementById('resultEmoji');
   const title=document.getElementById('resultTitle');
   const sub=document.getElementById('resultSub');
@@ -482,7 +557,6 @@ function gameOver(type){
     if(type!=='dead'){title.textContent='挑战完成！';sub.textContent='别灰心，下次一定行！'}
   }
 
-  // 渲染成就
   const achList=document.getElementById('achList');
   if(achievements.length>0){
     document.getElementById('achSection').style.display='block';
@@ -494,6 +568,50 @@ function gameOver(type){
   sWin();
 }
 
+// ==================== 排行榜 ====================
+const LB_KEY = 'quiz_leaderboard_v2';
+function getLeaderboard(){
+  try{return JSON.parse(localStorage.getItem(LB_KEY))||[]}catch(e){return[]}
+}
+function saveLeaderboard(list){localStorage.setItem(LB_KEY,JSON.stringify(list))}
+function saveScore(){
+  const nameInput=document.getElementById('playerName');
+  const name=nameInput.value.trim();
+  if(!name){nameInput.style.borderColor='#ff6b6b';nameInput.placeholder='⚠️ 请先输入昵称';return}
+  if(scoreSaved)return;
+  const list=getLeaderboard();
+  const diffName=currentDiff==='easy'?'简单':currentDiff==='medium'?'中等':'困难';
+  list.push({name,score,diff:diffName,date:new Date().toLocaleDateString()});
+  list.sort((a,b)=>b.score-a.score);
+  saveLeaderboard(list.slice(0,50));
+  scoreSaved=true;
+  document.getElementById('saveScoreBox').innerHTML='<div class="saved-tip">✅ 成绩已保存到排行榜！</div>';
+  sCorrect();
+}
+function showLeaderboard(){
+  sClick();
+  const list=getLeaderboard();
+  const ul=document.getElementById('leaderboardList');
+  if(list.length===0){
+    ul.innerHTML='<div class="empty-board"><div class="big">📭</div>还没有成绩哦<br>快去答题上榜吧！</div>';
+  }else{
+    const medals=['🥇','🥈','🥉'];
+    ul.innerHTML=list.slice(0,10).map((item,i)=>`
+      <li class="leaderboard-item ${i<3?'top'+(i+1):''}">
+        <div class="lb-rank">${i<3?medals[i]:i+1}</div>
+        <div class="lb-name">${escapeHtml(item.name)}<span class="lb-diff">${item.diff||''}</span></div>
+        <div class="lb-score">${item.score}分</div>
+      </li>
+    `).join('');
+  }
+  document.getElementById('leaderboardModal').classList.add('show');
+}
+function closeLeaderboard(){sClick();document.getElementById('leaderboardModal').classList.remove('show')}
+function clearLeaderboard(){
+  if(confirm('确定要清空所有排行榜记录吗？')){localStorage.removeItem(LB_KEY);showLeaderboard()}
+}
+function escapeHtml(str){const d=document.createElement('div');d.textContent=str;return d.innerHTML}
+
 // ==================== 重新开始 ====================
 function restart(){
   sClick();
@@ -503,65 +621,42 @@ function restart(){
   hideCombo();
 }
 
-// ==================== 生成海报 ====================
+// ==================== 海报 ====================
 function showPoster(){
   sClick();
   const canvas=document.getElementById('posterCanvas');
   const ctx=canvas.getContext('2d');
   const W=600,H=800;
-
-  // 背景渐变
   const grad=ctx.createLinearGradient(0,0,W,H);
   grad.addColorStop(0,'#667eea');grad.addColorStop(0.5,'#764ba2');grad.addColorStop(1,'#f093fb');
   ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);
-
-  // 装饰圆
   ctx.fillStyle='rgba(255,255,255,0.1)';
   ctx.beginPath();ctx.arc(80,120,60,0,Math.PI*2);ctx.fill();
   ctx.beginPath();ctx.arc(520,680,80,0,Math.PI*2);ctx.fill();
   ctx.beginPath();ctx.arc(550,100,40,0,Math.PI*2);ctx.fill();
-
-  // 白色卡片
-  ctx.fillStyle='#fff';
-  roundRect(ctx,60,140,480,560,30);ctx.fill();
-
-  // 标题
+  ctx.fillStyle='#fff';roundRect(ctx,60,140,480,560,30);ctx.fill();
   ctx.fillStyle='#333';ctx.font='bold 36px Microsoft YaHei';ctx.textAlign='center';
   ctx.fillText('🎯 欢乐答题大挑战',300,210);
-
-  // 分数
   ctx.fillStyle='#667eea';ctx.font='bold 72px Microsoft YaHei';
   ctx.fillText(score+'分',300,310);
-
-  // 评级
   const rankText=document.getElementById('rankBadge').textContent;
   ctx.fillStyle='#999';ctx.font='20px Microsoft YaHei';
   ctx.fillText(rankText,300,355);
-
-  // 数据
   ctx.fillStyle='#666';ctx.font='18px Microsoft YaHei';
   ctx.fillText(`答对 ${correctCount}/${questions.length} 题 · 最高 ${maxCombo} 连击`,300,410);
   ctx.fillText(`难度：${currentDiff==='easy'?'🌱 简单':currentDiff==='medium'?'🔥 中等':'💀 困难'}`,300,445);
-
-  // 成就
   if(achievements.length>0){
     ctx.fillStyle='#333';ctx.font='bold 18px Microsoft YaHei';
     ctx.fillText('🏅 获得成就',300,500);
     ctx.font='15px Microsoft YaHei';ctx.fillStyle='#ff8c00';
-    achievements.forEach((a,i)=>{
-      ctx.fillText(`${a.icon} ${a.name}`,300,535+i*28);
-    });
+    achievements.forEach((a,i)=>{ctx.fillText(`${a.icon} ${a.name}`,300,535+i*28)});
   }
-
-  // 底部
   ctx.fillStyle='#fff';ctx.font='16px Microsoft YaHei';
   ctx.fillText('扫码来挑战，看你能拿多少分！',300,740);
   ctx.fillStyle='rgba(255,255,255,0.6)';ctx.font='12px Microsoft YaHei';
   ctx.fillText('欢乐答题大挑战 · 等你来战',300,770);
-
   document.getElementById('posterModal').classList.add('show');
 }
-
 function roundRect(ctx,x,y,w,h,r){
   ctx.beginPath();
   ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);
@@ -570,7 +665,6 @@ function roundRect(ctx,x,y,w,h,r){
   ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);
   ctx.closePath();
 }
-
 function downloadPoster(){
   const canvas=document.getElementById('posterCanvas');
   const link=document.createElement('a');
@@ -579,6 +673,7 @@ function downloadPoster(){
   link.click();
 }
 function closePoster(){document.getElementById('posterModal').classList.remove('show')}
+document.getElementById('leaderboardModal').addEventListener('click',e=>{if(e.target.id==='leaderboardModal')closeLeaderboard()});
 document.getElementById('posterModal').addEventListener('click',e=>{if(e.target.id==='posterModal')closePoster()});
 </script>
 </body>
